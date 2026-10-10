@@ -10,14 +10,11 @@ var connectionString =
         "No se encontró la conexión HeroesDb.");
 
 builder.Services.AddRazorPages(options =>
-
 {
-
     options.Conventions.AuthorizeFolder("/Heroes");
-
     options.Conventions.AuthorizeFolder("/SuperPoderes");
-
 });
+builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<HeroesContext>(options =>
     options.UseSqlServer(connectionString));
@@ -54,6 +51,9 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapStaticAssets();
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages().WithStaticAssets();
 
 app.Run();
